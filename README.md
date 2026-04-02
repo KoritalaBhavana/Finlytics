@@ -1,8 +1,3 @@
-Here's your complete README — copy everything between the lines:
-
----
-
-```markdown
 # Finlytics — Finance Dashboard
 
 A fully responsive, role-aware finance dashboard built as part of a frontend developer internship assignment. It lets users track income, expenses, and spending patterns through an interactive UI with real-time filtering, charting, and insights.
@@ -268,4 +263,3 @@ All state (role, transactions, filters) is persisted to localStorage under the k
 ---
 
 *Built by Bhavana Koritala — Frontend Developer*
-```
