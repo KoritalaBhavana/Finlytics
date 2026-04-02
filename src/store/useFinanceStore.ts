@@ -45,6 +45,14 @@ interface FinanceState {
   editTransaction: (id: string, updates: Partial<Transaction>) => void;
 }
 
+const defaultFilters: Filters = {
+  search: '',
+  type: 'all',
+  category: 'all',
+  sortBy: 'date',
+  sortOrder: 'desc',
+};
+
 const mockTransactions: Transaction[] = [
   { id: '1', date: '2026-03-28', description: 'Monthly Salary', amount: 8500, type: 'income', category: 'Salary' },
   { id: '2', date: '2026-03-27', description: 'Grocery Store', amount: 142.50, type: 'expense', category: 'Food & Dining' },
@@ -78,14 +86,8 @@ export const useFinanceStore = create<FinanceState>()(
     (set) => ({
       role: 'admin',
       transactions: mockTransactions,
-      filters: {
-        search: '',
-        type: 'all',
-        category: 'all',
-        sortBy: 'date',
-        sortOrder: 'desc',
-      },
-      setRole: (role) => set({ role }),
+      filters: defaultFilters,
+      setRole: (role) => set({ role, filters: defaultFilters }),
       setFilter: (key, value) =>
         set((state) => ({ filters: { ...state.filters, [key]: value } })),
       addTransaction: (t) =>

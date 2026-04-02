@@ -1,6 +1,7 @@
 import { useFinanceStore } from '@/store/useFinanceStore';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useMemo } from 'react';
+import { useTheme } from 'next-themes';
 
 const COLORS = [
   'hsl(217, 91%, 60%)',
@@ -15,6 +16,12 @@ const COLORS = [
 
 export const SpendingBreakdown = () => {
   const { transactions } = useFinanceStore();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+
+  const tooltipBackground = isDark ? 'hsl(224, 28%, 12%)' : 'hsl(0, 0%, 100%)';
+  const tooltipBorder = isDark ? 'hsl(224, 28%, 18%)' : 'hsl(220, 13%, 91%)';
+  const tooltipText = isDark ? 'hsl(210, 40%, 98%)' : 'hsl(220, 25%, 10%)';
 
   const data = useMemo(() => {
     const byCategory: Record<string, number> = {};
@@ -54,11 +61,14 @@ export const SpendingBreakdown = () => {
               <Tooltip
                 formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]}
                 contentStyle={{
-                  backgroundColor: 'hsl(0, 0%, 100%)',
-                  border: '1px solid hsl(220, 13%, 91%)',
+                  backgroundColor: tooltipBackground,
+                  border: `1px solid ${tooltipBorder}`,
                   borderRadius: '8px',
                   fontSize: '13px',
+                  color: tooltipText,
                 }}
+                itemStyle={{ color: tooltipText }}
+                labelStyle={{ color: tooltipText }}
               />
             </PieChart>
           </ResponsiveContainer>

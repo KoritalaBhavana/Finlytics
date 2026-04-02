@@ -9,9 +9,18 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useMemo } from 'react';
+import { useTheme } from 'next-themes';
 
 export const BalanceTrend = () => {
   const { transactions } = useFinanceStore();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+
+  const chartGridColor = isDark ? 'hsl(224, 28%, 18%)' : 'hsl(220, 13%, 91%)';
+  const chartAxisColor = isDark ? 'hsl(215, 20%, 65%)' : 'hsl(220, 10%, 46%)';
+  const tooltipBackground = isDark ? 'hsl(224, 28%, 12%)' : 'hsl(0, 0%, 100%)';
+  const tooltipBorder = isDark ? 'hsl(224, 28%, 18%)' : 'hsl(220, 13%, 91%)';
+  const tooltipText = isDark ? 'hsl(210, 40%, 98%)' : 'hsl(220, 25%, 10%)';
 
   const data = useMemo(() => {
     const monthly: Record<string, { income: number; expenses: number }> = {};
@@ -51,16 +60,19 @@ export const BalanceTrend = () => {
                 <stop offset="95%" stopColor="hsl(0, 84%, 60%)" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 91%)" />
-            <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="hsl(220, 10%, 46%)" />
-            <YAxis tick={{ fontSize: 12 }} stroke="hsl(220, 10%, 46%)" />
+            <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+            <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke={chartAxisColor} />
+            <YAxis tick={{ fontSize: 12 }} stroke={chartAxisColor} />
             <Tooltip
               contentStyle={{
-                backgroundColor: 'hsl(0, 0%, 100%)',
-                border: '1px solid hsl(220, 13%, 91%)',
+                backgroundColor: tooltipBackground,
+                border: `1px solid ${tooltipBorder}`,
                 borderRadius: '8px',
                 fontSize: '13px',
+                color: tooltipText,
               }}
+              itemStyle={{ color: tooltipText }}
+              labelStyle={{ color: tooltipText }}
               formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]}
             />
             <Area
