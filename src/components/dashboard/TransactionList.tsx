@@ -204,7 +204,10 @@ export const TransactionList = () => {
             className="pl-9"
           />
         </div>
-        <Select value={filters.type} onValueChange={(v) => setFilter('type', v)}>
+        <Select
+          value={filters.type}
+          onValueChange={(v) => setFilter('type', v as 'income' | 'expense' | 'all')}
+        >
           <SelectTrigger className="w-full sm:w-36">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
@@ -214,7 +217,10 @@ export const TransactionList = () => {
             <SelectItem value="expense">Expense</SelectItem>
           </SelectContent>
         </Select>
-        <Select value={filters.category} onValueChange={(v) => setFilter('category', v)}>
+        <Select
+          value={filters.category}
+          onValueChange={(v) => setFilter('category', v as Category | 'all')}
+        >
           <SelectTrigger className="w-full sm:w-44">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
